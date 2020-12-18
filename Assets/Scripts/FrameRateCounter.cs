@@ -33,7 +33,7 @@ public class FrameRateCounter : MonoBehaviour {
 		if (duration >= sampleDuration) {
 			if (displayMode == DisplayMode.FPS) {
 				display.SetText(
-					"FSP\n{0:0}\n{1:0}\n{2:0}",
+					"FPS\n{0:0}\n{1:0}\n{2:0}",
 					1f / bestDuration,
 					frames / duration,
 					1f / worstDuration
