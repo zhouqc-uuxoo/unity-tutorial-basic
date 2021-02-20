@@ -249,7 +249,7 @@ MonoBehaviour:
   function: 0
   transitionMode: 0
   functionDuration: 1
-  transitionDuration: 0
+  transitionDuration: 1
 --- !u!4 &543811419
 Transform:
   m_ObjectHideFlags: 0
