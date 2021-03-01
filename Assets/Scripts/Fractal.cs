@@ -75,6 +75,12 @@ public class Fractal : MonoBehaviour
 
     void Update()
     {
+        Quaternion deltaRotation = Quaternion.Euler(0f, 22.5f * Time.deltaTime, 0f);
+
+        FractalPart rootPart = parts[0][0];
+        rootPart.rotation *= deltaRotation;
+        rootPart.transform.localRotation = rootPart.rotation;
+        parts[0][0] = rootPart;
         for (int li = 1; li < parts.Length; li++)
         {
             FractalPart[] parentParts = parts[li - 1];
@@ -83,12 +89,14 @@ public class Fractal : MonoBehaviour
             {
                 Transform parentTransform = parentParts[fpi / 5].transform;
                 FractalPart part = levelParts[fpi];
+                part.rotation *= deltaRotation;
                 part.transform.localRotation = parentTransform.localRotation *
                     part.rotation;
                 part.transform.localPosition = parentTransform.localPosition +
                     parentTransform.localRotation *
                     (1.5f * part.transform.localScale.x * 
                     part.direction);
+                levelParts[fpi] = part;
             }
         }
     }
