@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Fractal : MonoBehaviour
 {
+    struct FractalPart
+    {
+        public Vector3 direction;
+        public Quaternion rotation;
+        public Transform transform;
+    }
+
     [SerializeField, Range(1, 8)]
     int depth = 4;
 
@@ -25,8 +32,16 @@ public class Fractal : MonoBehaviour
         Quaternion.Euler(90f, 0f, 0f), Quaternion.Euler(-90f, 0f, 0f)
     };
 
+    FractalPart[][] parts;
+
     void Awake()
     {
+        parts = new FractalPart[depth][];
+        for (int i = 0, length = 1; i < parts.Length; i++, length *= 5)
+        {
+            parts[i] = new FractalPart[length];
+        }
+
         CreatePart();
     }
 
