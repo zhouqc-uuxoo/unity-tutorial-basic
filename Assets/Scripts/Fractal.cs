@@ -7,6 +7,20 @@ using Unity.Collections;
 
 public class Fractal : MonoBehaviour
 {
+    struct UpdateFractalLevelJob : IJobFor {
+
+        public float spinAngleDelta;
+        public float scale;
+
+        [ReadOnly]
+        public NativeArray<FractalPart> parents;
+        public NativeArray<FractalPart> parts;
+
+        [WriteOnly]
+        public NativeArray<Matrix4x4> matrices;
+
+        public void Execute (int i) { }
+    }
     struct FractalPart
     {
         public Vector3 direction, worldPosition;
