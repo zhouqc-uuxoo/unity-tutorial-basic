@@ -154,19 +154,21 @@ public class Fractal : MonoBehaviour
             objectScale * Vector3.one);
 
         float scale = objectScale;
+
+        JobHandle jobHandle = default;
         for (int li = 1; li < parts.Length; li++)
         {
             scale *= 0.5f;
-            var job = new UpdateFractalLevelJob
+            jobHandle = new UpdateFractalLevelJob
             {
                 spinAngleDelta = spinAngleDelta,
                 scale = scale,
                 parents = parts[li - 1],
                 parts = parts[li],
                 matrices = matrices[li]
-            };
-            job.Schedule(parts[li].Length, default).Complete();
+            }.Schedule(parts[li].Length, jobHandle);
         }
+        jobHandle.Complete();
 
         var bounds = new Bounds(Vector3.zero, 3f * objectScale * Vector3.one);
         for (int i = 0; i < matricesBuffers.Length; i++)
