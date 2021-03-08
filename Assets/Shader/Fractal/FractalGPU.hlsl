@@ -16,7 +16,7 @@ float4 _Color;
 
 float4 GetFractalColor() {
 #if defined(UNITY_PROCEDURAL_INSTANCING_ENABLED)
-	return (unity_InstanceID % 10.0) / 9.0;
+	return frac(unity_InstanceID * 0.381);
 #else
 	return _Color;
 #endif
