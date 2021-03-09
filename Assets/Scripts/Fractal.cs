@@ -39,7 +39,8 @@ public class Fractal : MonoBehaviour
             if (sagMagnitude > 0f)
             {
                 sagAxis /= sagMagnitude;
-                quaternion sagRotation = quaternion.AxisAngle(sagAxis, PI * 0.25f * sagMagnitude);
+                quaternion sagRotation = quaternion.AxisAngle(
+                    sagAxis, part.maxSagAngle * sagMagnitude);
                 baseRotation = mul(sagRotation, parent.worldRotation);
             }
             else
@@ -61,7 +62,7 @@ public class Fractal : MonoBehaviour
     {
         public float3 worldPosition;
         public quaternion rotation, worldRotation;
-        public float spinAngle;
+        public float maxSagAngle, spinAngle;
     }
 
     [SerializeField, Range(3, 8)]
@@ -78,6 +79,9 @@ public class Fractal : MonoBehaviour
 
     [SerializeField]
     Color leafColorA = default, leafColorB = default;
+
+    [SerializeField, Range(0f, 90f)]
+    float maxSagAngleA = 15f, maxSagAngleB = 25f;
 
     static quaternion[] rotations =
     {
@@ -164,6 +168,8 @@ public class Fractal : MonoBehaviour
 
         return new FractalPart
         {
+            maxSagAngle = radians(
+                Random.Range(maxSagAngleA, maxSagAngleB)),
             rotation = rotations[childIndex]
         };
     }
