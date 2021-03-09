@@ -272,8 +272,8 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: b8c6071922109d44492890cc78ad3930, type: 2}
   gradientA:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 0, b: 0, a: 1}
+    key0: {r: 1, g: 1, b: 0, a: 0.3137255}
+    key1: {r: 1, g: 0, b: 0, a: 0.3529412}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -301,8 +301,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   gradientB:
     serializedVersion: 2
-    key0: {r: 0, g: 0, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 0, a: 1}
+    key0: {r: 1, g: 0, b: 0, a: 0.54901963}
+    key1: {r: 1, g: 1, b: 0, a: 0.627451}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -328,8 +328,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  leafColorA: {r: 0.5019608, g: 1, b: 0.5019608, a: 1}
-  leafColorB: {r: 0, g: 1, b: 0, a: 1}
+  leafColorA: {r: 0.5019608, g: 1, b: 0.5019608, a: 0.5019608}
+  leafColorB: {r: 0, g: 1, b: 0, a: 0.9019608}
 --- !u!4 &1359220012
 Transform:
   m_ObjectHideFlags: 0
