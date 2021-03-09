@@ -39,7 +39,7 @@ public class Fractal : MonoBehaviour
             if (sagMagnitude > 0f)
             {
                 sagAxis /= sagMagnitude;
-                quaternion sagRotation = quaternion.AxisAngle(sagAxis, PI * 0.25f);
+                quaternion sagRotation = quaternion.AxisAngle(sagAxis, PI * 0.25f * sagMagnitude);
                 baseRotation = mul(sagRotation, parent.worldRotation);
             }
             else
