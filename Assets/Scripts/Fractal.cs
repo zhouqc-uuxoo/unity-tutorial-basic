@@ -29,10 +29,28 @@ public class Fractal : MonoBehaviour
             FractalPart parent = parents[i / 5];
             FractalPart part = parts[i];
             part.spinAngle += spinAngleDelta;
-            part.worldRotation = mul(parent.worldRotation,
+
+            float3 upAxis = mul(
+                mul(parent.worldRotation, part.rotation), up());
+            float3 sagAxis = cross(up(), upAxis);
+
+            float sagMagnitude = length(sagAxis);
+            quaternion baseRotation;
+            if (sagMagnitude > 0f)
+            {
+                sagAxis /= sagMagnitude;
+                quaternion sagRotation = quaternion.AxisAngle(sagAxis, PI * 0.25f);
+                baseRotation = mul(sagRotation, parent.worldRotation);
+            }
+            else
+            {
+                baseRotation = parent.worldRotation;
+            }
+
+            part.worldRotation = mul(baseRotation,
                 mul(part.rotation, quaternion.RotateY(part.spinAngle)));
             part.worldPosition = parent.worldPosition +
-                mul(parent.worldRotation, 1.5f * scale * part.direction);
+                mul(part.worldRotation, float3(0f, 1.5f * scale, 0f));
             parts[i] = part;
 
             float3x3 r = float3x3(part.worldRotation) * scale;
@@ -41,7 +59,7 @@ public class Fractal : MonoBehaviour
     }
     struct FractalPart
     {
-        public float3 direction, worldPosition;
+        public float3 worldPosition;
         public quaternion rotation, worldRotation;
         public float spinAngle;
     }
@@ -60,11 +78,6 @@ public class Fractal : MonoBehaviour
 
     [SerializeField]
     Color leafColorA = default, leafColorB = default;
-
-    static float3[] directions =
-    {
-        up(), right(), left(), forward(), back()
-    };
 
     static quaternion[] rotations =
     {
@@ -104,7 +117,7 @@ public class Fractal : MonoBehaviour
             sequenceNumbers[i] = new Vector4(
                 Random.value, Random.value, Random.value, Random.value);
         }
-
+        
         parts[0][0] = CreatePart(0);
         for (int li = 1; li < parts.Length; li++)
         {
@@ -151,7 +164,6 @@ public class Fractal : MonoBehaviour
 
         return new FractalPart
         {
-            direction = directions[childIndex],
             rotation = rotations[childIndex]
         };
     }
