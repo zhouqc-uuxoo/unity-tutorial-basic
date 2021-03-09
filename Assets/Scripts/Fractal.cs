@@ -84,7 +84,10 @@ public class Fractal : MonoBehaviour
     float maxSagAngleA = 15f, maxSagAngleB = 25f;
 
     [SerializeField, Range(0f, 90f)]
-    float spinVelocityA = 20f, spinVelocityB = 25f;
+    float spinSpeedA = 20f, spinSpeedB = 25f;
+
+    [SerializeField, Range(0f, 1f)]
+    float reverseSpnChance = 0.25f;
 
     static quaternion[] rotations =
     {
@@ -174,8 +177,9 @@ public class Fractal : MonoBehaviour
             maxSagAngle = radians(
                 Random.Range(maxSagAngleA, maxSagAngleB)),
             rotation = rotations[childIndex],
-            spinVelocity = radians(
-                Random.Range(spinVelocityA, spinVelocityB))
+            spinVelocity =
+            (Random.value < reverseSpnChance ? -1f : 1f) *
+            radians(Random.Range(spinSpeedA, spinSpeedB))
         };
     }
 
