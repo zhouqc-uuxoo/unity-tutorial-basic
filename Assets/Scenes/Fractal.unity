@@ -327,6 +327,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  leafColorA: {r: 0.5019608, g: 1, b: 0.5019608, a: 1}
+  leafColorB: {r: 0, g: 1, b: 0, a: 1}
 --- !u!4 &1359220012
 Transform:
   m_ObjectHideFlags: 0

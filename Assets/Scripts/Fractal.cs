@@ -46,7 +46,7 @@ public class Fractal : MonoBehaviour
         public float spinAngle;
     }
 
-    [SerializeField, Range(2, 8)]
+    [SerializeField, Range(3, 8)]
     int depth = 4;
 
     [SerializeField]
@@ -57,6 +57,9 @@ public class Fractal : MonoBehaviour
 
     [SerializeField]
     Gradient gradientA = default, gradientB = default;
+
+    [SerializeField]
+    Color leafColorA = default, leafColorB = default;
 
     static float3[] directions =
     {
@@ -185,13 +188,26 @@ public class Fractal : MonoBehaviour
         jobHandle.Complete();
 
         var bounds = new Bounds(Vector3.zero, 3f * objectScale * Vector3.one);
+        int leafIndex = matricesBuffers.Length - 1;
         for (int i = 0; i < matricesBuffers.Length; i++)
         {
             ComputeBuffer buffer = matricesBuffers[i];
-            matricesBuffers[i].SetData(matrices[i]);
-            float gradientInterpolator = i / (matricesBuffers.Length - 1f);
-            propertyBlock.SetColor(colorAId, gradientA.Evaluate(gradientInterpolator));
-            propertyBlock.SetColor(colorBId, gradientB.Evaluate(gradientInterpolator));
+            buffer.SetData(matrices[i]);
+
+            Color colorA, colorB;
+            if (i == leafIndex)
+            {
+                colorA = leafColorA;
+                colorB = leafColorB;
+            }
+            else
+            { 
+                float gradientInterpolator = i / (matricesBuffers.Length - 2f);
+                colorA = gradientA.Evaluate(gradientInterpolator);
+                colorB = gradientB.Evaluate(gradientInterpolator);
+            }
+            propertyBlock.SetColor(colorAId, colorA);
+            propertyBlock.SetColor(colorBId, colorB);
             propertyBlock.SetBuffer(matricesId, buffer);
             propertyBlock.SetVector(sequenceNumbersId, sequenceNumbers[i]);
             Graphics.DrawMeshInstancedProcedural(
